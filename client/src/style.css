@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.artworks {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.art {
+  background-color: azure;
+  margin: 20px;
+  padding: 10px;
+}
