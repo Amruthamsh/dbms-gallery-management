@@ -7,7 +7,7 @@ const Artworks = () => {
   const [selectedType, setSelectedType] = useState("selectAll");
   const [artworks, setArtworks] = useState([]);
 
-  // Fetch unique types
+  // Fetch unique types/categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -60,8 +60,8 @@ const Artworks = () => {
             <h2>{art.TITLE}</h2>
             <img src={`images/artworks/${art.IMG_LINK}`} alt="" />
             <p>{art.TYPE}</p>
-            <p>STATUS: {art.STATUS == 1 ? "SOLD" : "NOT SOLD"}</p>
-            {art.STATUS == 0 && (
+            <p>STATUS: {art.STATUS === "1" ? "SOLD" : "NOT SOLD"}</p>
+            {art.STATUS === "0" && (
               <p>
                 PRICE: Rs. {art.PRICE}{" "}
                 <button>

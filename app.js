@@ -6,6 +6,9 @@ import {
   getArtworkCategories,
   getArtworks,
   createArtwork,
+  getExhibitionDates,
+  getExhibitionLocations,
+  getExhibitions,
 } from "./database.js";
 
 const app = express();
@@ -45,6 +48,26 @@ app.post("/artworks", async (req, res) => {
   res.status(201).send(art);
 });
 */
+
+app.get("/exhibitions/locations", async (req, res) => {
+  const _locations = await getExhibitionLocations();
+  const locations = _locations.map((location) => location.LOCATION);
+  res.send(locations);
+});
+
+app.get("/exhibitions/dates", async (req, res) => {
+  const _dates = await getExhibitionDates();
+  const dates = _dates.map((date) => date.START_DATE);
+  res.send(dates);
+});
+
+app.get("/exhibitions", async (req, res) => {
+  const selectedLocation = req.query.loc;
+  const selectedDate = req.query.date;
+  const exhibitions = await getExhibitions(selectedLocation, selectedDate);
+  console.log(exhibitions);
+  res.send(exhibitions);
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

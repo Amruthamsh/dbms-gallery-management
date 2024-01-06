@@ -35,6 +35,7 @@ export async function getArtworksByType(selectedType) {
 
   return rows;
 }
+
 export async function createArtwork(artwork_details) {
   const [result] = await pool.query(
     `
@@ -52,3 +53,26 @@ export async function createArtwork(artwork_details) {
 const artwork_details = ["1267", 1, 7000, "oil", "img9.png", "Rosebud"];
 //const result = await createArtwork(artwork_details);
 //console.log(result);
+
+export async function getExhibitions(selectedLocation, selectedDate) {
+  const [rows] = await pool.query(
+    `SELECT E_ID, EXH_NAME, GALLERY_NAME, DATE_FORMAT(START_DATE, "%W, %M %e, %Y") AS FORMATTED_DATE, LOCATION 
+    from exhibitions, gallery 
+    WHERE gallery.GAL_ID = exhibitions.GALLERY_ID AND LOCATION LIKE ? AND DATE(START_DATE) >= ?
+    ORDER BY START_DATE ASC`,
+    [selectedLocation, selectedDate]
+  );
+  return rows;
+}
+
+export async function getExhibitionDates() {
+  const [rows] = await pool.query(
+    "SELECT DISTINCT START_DATE FROM exhibitions"
+  );
+  return rows;
+}
+
+export async function getExhibitionLocations() {
+  const [rows] = await pool.query("SELECT DISTINCT LOCATION FROM gallery");
+  return rows;
+}
