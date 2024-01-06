@@ -1,5 +1,7 @@
 .App {
-  display: flex;
+}
+
+header {
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -14,4 +16,23 @@
   background-color: azure;
   margin: 20px;
   padding: 10px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container aside {
+  min-width: 300px;
+  padding: 20px;
+}
+
+.flex-container section {
+  flex: 1;
+}
+
+@media only screen and (max-width: 992px) {
+  .flex-container {
+    flex-direction: column;
+  }
 }

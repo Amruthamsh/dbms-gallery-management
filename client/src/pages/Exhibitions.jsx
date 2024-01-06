@@ -3,7 +3,7 @@ import axios from "axios";
 import CalendarSelect from "../components/CalendarSelect";
 
 const Exhibitions = () => {
-  const [allDates, setDates] = useState([]);
+  //const [allDates, setDates] = useState([]);
   const [allLocations, setLocations] = useState([]);
 
   const today = new Date();
@@ -66,35 +66,44 @@ const Exhibitions = () => {
 
   return (
     <div>
-      <h1>Exhibitions</h1>
-      <label htmlFor="locationDropdown">Available Locations:</label>
-      <select
-        id="locationDropdown"
-        onChange={(e) => setSelectedLocation(e.target.value)}
-        value={selectedLocation}
-      >
-        <option value="%">All Locations</option>
-        {allLocations.map((location) => (
-          <option key={location} value={location}>
-            {location}
-          </option>
-        ))}
-      </select>
+      <header>
+        <h1>Emprise Galleries</h1>
+        <h2>Exhibitions</h2>
+      </header>
 
-      <CalendarSelect
-        selectedDate={selectedDate}
-        handleDateChange={(date) => setSelectedDate(date)}
-      />
+      <div className="flex-container">
+        <aside>
+          <label htmlFor="locationDropdown">Available Locations:</label>
+          <select
+            id="locationDropdown"
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            value={selectedLocation}
+          >
+            <option value="%">All Locations</option>
+            {allLocations.map((location) => (
+              <option key={location} value={location}>
+                {location}
+              </option>
+            ))}
+          </select>
 
-      <div className="exhibitions">
-        {exhibitions.map((exhibition) => (
-          <div className="exhibition" key={exhibition.E_ID}>
-            <h3>{exhibition.EXH_NAME}</h3>
-            <p>{exhibition.GALLERY_NAME}</p>
-            <p>{exhibition.LOCATION}</p>
-            <p>{exhibition.FORMATTED_DATE}</p>
+          <CalendarSelect
+            selectedDate={selectedDate}
+            handleDateChange={(date) => setSelectedDate(date)}
+          />
+        </aside>
+        <section>
+          <div className="exhibitions">
+            {exhibitions.map((exhibition) => (
+              <div className="exhibition" key={exhibition.E_ID}>
+                <h3>{exhibition.EXH_NAME}</h3>
+                <p>{exhibition.GALLERY_NAME}</p>
+                <p>{exhibition.LOCATION}</p>
+                <p>{exhibition.FORMATTED_DATE}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </section>
       </div>
     </div>
   );

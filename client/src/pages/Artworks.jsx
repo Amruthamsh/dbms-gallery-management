@@ -39,21 +39,22 @@ const Artworks = () => {
 
   return (
     <div>
-      <h1>Artworks</h1>
-      <label htmlFor="typeDropdown">Select Type:</label>
-      <select
-        id="typeDropdown"
-        onChange={(e) => setSelectedType(e.target.value)}
-        value={selectedType}
-      >
-        <option value="selectAll">All Types</option>
-        {types.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
-
+      <header>
+        <h1>Artworks</h1>
+        <label htmlFor="typeDropdown">Select Type:</label>
+        <select
+          id="typeDropdown"
+          onChange={(e) => setSelectedType(e.target.value)}
+          value={selectedType}
+        >
+          <option value="selectAll">All Types</option>
+          {types.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </header>
       <div className="artworks">
         {artworks.map((art) => (
           <div className="art" key={art.ART_ID}>
