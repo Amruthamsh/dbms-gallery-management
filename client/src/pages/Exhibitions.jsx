@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CalendarSelect from "../components/CalendarSelect";
+import { Link } from "react-router-dom";
 
 const Exhibitions = () => {
   //const [allDates, setDates] = useState([]);
@@ -12,18 +13,8 @@ const Exhibitions = () => {
   const [selectedLocation, setSelectedLocation] = useState("%");
   const [exhibitions, setExhibitions] = useState([]);
 
-  // Fetch unique locations and exhibition dates
+  // Fetch unique locations
   useEffect(() => {
-    /*
-    const fetchDates = async () => {
-      try {
-        const res = await axios.get("http://localhost:5050/exhibitions/dates");
-        setDates(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    */
     const fetchLocations = async () => {
       try {
         const res = await axios.get(
@@ -34,8 +25,6 @@ const Exhibitions = () => {
         console.log(err);
       }
     };
-
-    //fetchDates();
     fetchLocations();
   }, []);
 
@@ -65,12 +54,8 @@ const Exhibitions = () => {
   }, [selectedDate, selectedLocation]);
 
   return (
-    <div>
-      <header>
-        <h1>Emprise Galleries</h1>
-        <h2>Exhibitions</h2>
-      </header>
-
+    <div className="gallery">
+      <h2>Find Exhibitions!</h2>
       <div className="flex-container">
         <aside>
           <label htmlFor="locationDropdown">Available Locations:</label>
@@ -86,7 +71,7 @@ const Exhibitions = () => {
               </option>
             ))}
           </select>
-
+          <h3>Select Date</h3>
           <CalendarSelect
             selectedDate={selectedDate}
             handleDateChange={(date) => setSelectedDate(date)}
@@ -97,9 +82,16 @@ const Exhibitions = () => {
             {exhibitions.map((exhibition) => (
               <div className="exhibition" key={exhibition.E_ID}>
                 <h3>{exhibition.EXH_NAME}</h3>
-                <p>{exhibition.GALLERY_NAME}</p>
+                <p>
+                  <Link to={`/gallery/${exhibition.GALLERY_ID}`}>
+                    {exhibition.GALLERY_NAME}
+                  </Link>
+                </p>
                 <p>{exhibition.LOCATION}</p>
-                <p>{exhibition.FORMATTED_DATE}</p>
+                <p>
+                  {exhibition.FORMATTED_START_DATE} -{" "}
+                  {exhibition.FORMATTED_END_DATE}
+                </p>
               </div>
             ))}
           </div>

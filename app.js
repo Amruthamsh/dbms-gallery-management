@@ -4,11 +4,15 @@ import cors from "cors";
 import {
   getArtworksByType,
   getArtworkCategories,
-  getArtworks,
-  createArtwork,
   getExhibitionDates,
   getExhibitionLocations,
   getExhibitions,
+  getGallery,
+  getGalleryCurrentExhibitions,
+  getGalleryPastExhibitions,
+  getGalleryUpcomingExhibitions,
+  createExhibition,
+  getAdminData,
 } from "./database.js";
 
 const app = express();
@@ -65,8 +69,52 @@ app.get("/exhibitions", async (req, res) => {
   const selectedLocation = req.query.loc;
   const selectedDate = req.query.date;
   const exhibitions = await getExhibitions(selectedLocation, selectedDate);
-  console.log(exhibitions);
   res.send(exhibitions);
+});
+
+app.get("/gallery", async (req, res) => {
+  const id = req.query.id;
+  const gallery = await getGallery(id);
+  res.send(gallery);
+});
+
+app.get("/gallery/exhibitions/current", async (req, res) => {
+  const { id, date } = req.query;
+  const data = await getGalleryCurrentExhibitions(id, date);
+  res.json(data);
+});
+
+app.get("/gallery/exhibitions/past", async (req, res) => {
+  const { id, date } = req.query;
+  const data = await getGalleryPastExhibitions(id, date);
+  res.json(data);
+});
+
+app.get("/gallery/exhibitions/upcoming", async (req, res) => {
+  const { id, date } = req.query;
+  const data = await getGalleryUpcomingExhibitions(id, date);
+  res.json(data);
+});
+
+app.get("/curator", async (req, res) => {
+  const id = req.query.id;
+  const data = await getAdminData(id);
+  res.json(data);
+});
+
+app.post("/curator/exhibitions", async (req, res) => {
+  try {
+    console.log(req.body);
+    req.body.START_DATE = new Date(req.body.START_DATE)
+      .toISOString()
+      .split("T")[0];
+    req.body.END_DATE = new Date(req.body.END_DATE).toISOString().split("T")[0];
+    await createExhibition(req.body);
+    res.status(201).json({ message: "Exhibition created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 app.use((err, req, res, next) => {

@@ -24,15 +24,27 @@ header {
 
 .flex-container aside {
   min-width: 300px;
-  padding: 20px;
+  padding-top: 20px;
 }
 
 .flex-container section {
   flex: 1;
 }
 
+.exhibition {
+  margin-bottom: 50px;
+}
+
 @media only screen and (max-width: 992px) {
   .flex-container {
     flex-direction: column;
   }
+}
+
+.gallery {
+  margin-left: 30px;
+}
+
+.myButton {
+  padding-right: 10px;
 }
