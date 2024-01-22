@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PriceRangeSlider from "../components/PriceRangeSlider";
 
 const Artworks = () => {
   const [types, setTypes] = useState([]);
-  const [selectedType, setSelectedType] = useState("selectAll");
+  const [selectedType, setSelectedType] = useState("%");
+  const [selectedStatus, setSelectedStatus] = useState("%");
+  const [selectedPriceRange, setSelectedPriceRange] = useState([1000, 100000]);
   const [artworks, setArtworks] = useState([]);
 
   // Fetch unique types/categories
@@ -20,13 +23,19 @@ const Artworks = () => {
     fetchCategories();
   }, []);
 
+  const handlePriceRangeChange = (newRange) => {
+    // Handle the new price range, e.g., update state or perform a search
+    console.log("New Price Range:", newRange);
+    setSelectedPriceRange(newRange);
+  };
+
   // Fetch artworks based on selected type
   useEffect(() => {
     const fetchAllArt = async () => {
       if (selectedType) {
         try {
           const res = await axios.get(
-            `http://localhost:5050/artworks?type=${selectedType}`
+            `http://localhost:5050/artworks?type=${selectedType}&status=${selectedStatus}&range=${selectedPriceRange}`
           );
           setArtworks(res.data);
         } catch (err) {
@@ -35,25 +44,35 @@ const Artworks = () => {
       }
     };
     fetchAllArt();
-  }, [selectedType]);
+  }, [selectedStatus, selectedType, selectedPriceRange]);
 
   return (
     <div>
       <header>
-        <h1>Artworks</h1>
+        <h1>Our featured Artworks!</h1>
         <label htmlFor="typeDropdown">Select Type:</label>
         <select
           id="typeDropdown"
           onChange={(e) => setSelectedType(e.target.value)}
           value={selectedType}
         >
-          <option value="selectAll">All Types</option>
+          <option value="%">All Types</option>
           {types.map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
           ))}
         </select>
+        <select
+          id="statusDropdown"
+          onChange={(e) => setSelectedStatus(e.target.value)}
+          value={selectedStatus}
+        >
+          <option value="%">Sold/Not Sold</option>
+          <option value="0">Not Sold</option>
+          <option value="1">Sold</option>
+        </select>
+        <PriceRangeSlider onChange={handlePriceRangeChange} />
       </header>
       <div className="artworks">
         {artworks.map((art) => (

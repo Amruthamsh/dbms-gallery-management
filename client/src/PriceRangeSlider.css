@@ -1,0 +1,9 @@
+.price-range-slider-container {
+  width: 300px; /* Adjust the width of the container as needed */
+  margin: 0 auto; /* Center the container */
+}
+
+.custom-slider {
+  justify-content: center;
+  width: 300px; /* Adjust the width of the slider */
+}

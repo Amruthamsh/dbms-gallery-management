@@ -7,6 +7,7 @@ import {
   getExhibitionDates,
   getExhibitionLocations,
   getExhibitions,
+  getGalleries,
   getGallery,
   getGalleryCurrentExhibitions,
   getGalleryPastExhibitions,
@@ -34,8 +35,8 @@ app.get("/artworks", async (req, res) => {
   //const artworks = await getArtworks();
   //res.send(artworks);
 
-  const selectedType = req.query.type;
-  const artworks = await getArtworksByType(selectedType);
+  const { type, status, range } = req.query;
+  const artworks = await getArtworksByType(type, status, range);
   res.send(artworks);
 });
 
@@ -70,6 +71,13 @@ app.get("/exhibitions", async (req, res) => {
   const selectedDate = req.query.date;
   const exhibitions = await getExhibitions(selectedLocation, selectedDate);
   res.send(exhibitions);
+});
+
+app.get("/galleries", async (req, res) => {
+  const selectedLocation = req.query.loc;
+  const galleries = await getGalleries(selectedLocation);
+  console.log(galleries);
+  res.send(galleries);
 });
 
 app.get("/gallery", async (req, res) => {

@@ -51,7 +51,6 @@ const Gallery = () => {
   }, []);
   return (
     <div className="gallery">
-      <Link to="/">Exhibitions</Link>
       {gallery && (
         <div className="exhibition">
           <h2>{gallery?.GALLERY_NAME}</h2>

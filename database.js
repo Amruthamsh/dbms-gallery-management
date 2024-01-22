@@ -21,17 +21,16 @@ export async function getArtworkCategories() {
   return rows;
 }
 
-export async function getArtworksByType(selectedType) {
-  let query = "SELECT * FROM artwork";
-  let rows;
+export async function getArtworksByType(selectedType, selectedStatus, range) {
+  const rangeArray = range.split(",").map(Number);
 
-  // If a type is selected, filter by TYPE
-  if (selectedType === "selectAll") {
-    [rows] = await pool.query(query);
-  } else {
-    query += " WHERE TYPE = ?";
-    [rows] = await pool.query(query, [selectedType]);
-  }
+  const [rows] = await pool.query(
+    `
+SELECT * 
+FROM artwork
+where TYPE LIKE ? and STATUS LIKE ? and PRICE BETWEEN ? AND ?`,
+    [selectedType, selectedStatus, rangeArray[0], rangeArray[1]]
+  );
 
   return rows;
 }
@@ -74,6 +73,17 @@ export async function getExhibitionDates() {
 
 export async function getExhibitionLocations() {
   const [rows] = await pool.query("SELECT DISTINCT LOCATION FROM gallery");
+  return rows;
+}
+
+//get all the galleries
+export async function getGalleries(loc) {
+  const [rows] = await pool.query(
+    `SELECT GAL_ID, GALLERY_NAME, LOCATION
+    from gallery
+    WHERE gallery.LOCATION LIKE ?`,
+    [loc]
+  );
   return rows;
 }
 
