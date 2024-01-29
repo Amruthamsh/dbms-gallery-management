@@ -27,8 +27,8 @@ export async function getArtworksByType(selectedType, selectedStatus, range) {
   const [rows] = await pool.query(
     `
 SELECT * 
-FROM artwork
-where TYPE LIKE ? and STATUS LIKE ? and PRICE BETWEEN ? AND ?`,
+FROM artwork,artists
+where artwork.artist_id = artists.artist_id and TYPE LIKE ? and STATUS LIKE ? and PRICE BETWEEN ? AND ?`,
     [selectedType, selectedStatus, rangeArray[0], rangeArray[1]]
   );
 

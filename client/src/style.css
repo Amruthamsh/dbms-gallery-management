@@ -10,12 +10,24 @@ header {
 .artworks {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .art {
-  background-color: azure;
+  background-color: rgb(255, 255, 255);
   margin: 20px;
   padding: 10px;
+}
+
+.art:hover {
+  border-radius: 25px;
+  box-shadow: 4px 4px 10px rgb(194, 201, 208);
+  cursor: pointer;
+}
+
+.art img {
+  width: auto;
+  height: 400px;
 }
 
 .flex-container {

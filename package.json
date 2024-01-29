@@ -5,6 +5,7 @@
   "type": "module",
   "main": "database.js",
   "scripts": {
+    "start": "npx concurrently \"cd client && npm start\" \"npm run dev\"",
     "dev": "npx nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

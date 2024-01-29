@@ -79,16 +79,24 @@ const Artworks = () => {
           <div className="art" key={art.ART_ID}>
             <h2>{art.TITLE}</h2>
             <img src={`images/artworks/${art.IMG_LINK}`} alt="" />
-            <p>{art.TYPE}</p>
-            <p>STATUS: {art.STATUS === "1" ? "SOLD" : "NOT SOLD"}</p>
-            {art.STATUS === "0" && (
-              <p>
-                PRICE: Rs. {art.PRICE}{" "}
-                <button>
-                  <Link to="/buyart">Buy</Link>
-                </button>
-              </p>
-            )}
+            <h4>
+              {art.FirstName} {art.LastName}
+              {", "}
+              {art.TYPE}
+            </h4>
+
+            <p>
+              {art.STATUS === "1"
+                ? "SOLD"
+                : art.STATUS === "0" && (
+                    <p>
+                      Price: ₹{art.PRICE}{" "}
+                      <button>
+                        <Link to="/buyart">Buy</Link>
+                      </button>
+                    </p>
+                  )}
+            </p>
           </div>
         ))}
       </div>
