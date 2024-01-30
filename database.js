@@ -11,6 +11,15 @@ const pool = mysql
   })
   .promise();
 
+export async function getAllArtists() {
+  const [rows] = await pool.query(
+    `SELECT artist_id, FirstName, LastName
+    FROM artists
+    WHERE artist_id IN (SELECT DISTINCT artist_id FROM artwork);`
+  );
+  return rows;
+}
+
 export async function getArtworks() {
   const [rows] = await pool.query("SELECT * from artwork");
   return rows;
@@ -21,15 +30,25 @@ export async function getArtworkCategories() {
   return rows;
 }
 
-export async function getArtworksByType(selectedType, selectedStatus, range) {
+export async function getArtworksByType(
+  selectedType,
+  selectedStatus,
+  range,
+  artist_id
+) {
   const rangeArray = range.split(",").map(Number);
 
   const [rows] = await pool.query(
     `
-SELECT * 
-FROM artwork,artists
-where artwork.artist_id = artists.artist_id and TYPE LIKE ? and STATUS LIKE ? and PRICE BETWEEN ? AND ?`,
-    [selectedType, selectedStatus, rangeArray[0], rangeArray[1]]
+    SELECT artists.*, artwork.*
+FROM artists
+JOIN artwork ON artwork.artist_id = artists.artist_id
+WHERE artists.artist_id LIKE ?
+  AND artwork.TYPE LIKE ?
+  AND artwork.STATUS LIKE ?
+  AND artwork.PRICE BETWEEN ? AND ?;
+    `,
+    [artist_id, selectedType, selectedStatus, rangeArray[0], rangeArray[1]]
   );
 
   return rows;

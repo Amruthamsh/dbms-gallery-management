@@ -14,18 +14,16 @@ const PriceRangeSlider = ({ onChange }) => {
 
   return (
     <div className="price-range-slider-container">
-      <p>
-        Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}
-        <Slider
-          className="custom-slider"
-          range
-          min={1000}
-          max={100000}
-          step={100}
-          defaultValue={priceRange}
-          onChange={handleSliderChange}
-        />
-      </p>
+      Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}
+      <Slider
+        className="custom-slider"
+        range
+        min={1000}
+        max={100000}
+        step={100}
+        defaultValue={priceRange}
+        onChange={handleSliderChange}
+      />
     </div>
   );
 };

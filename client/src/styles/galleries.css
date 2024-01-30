@@ -1,0 +1,23 @@
+.galleries {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gallery-items {
+  text-decoration: none;
+  color: #1a0061;
+}
+
+.gallery-items:hover {
+  text-decoration: none;
+  color: #989898;
+}
+
+.gallery-page {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}

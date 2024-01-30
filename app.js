@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import {
+  getAllArtists,
   getArtworksByType,
   getArtworkCategories,
   getExhibitionDates,
@@ -24,6 +25,11 @@ app.get("/", async (req, res) => {
   res.json("FIRST PAGE");
 });
 
+app.get("/artists", async (req, res) => {
+  const artists = await getAllArtists();
+  res.send(artists);
+});
+
 // Define the API endpoint to fetch unique values from the TYPE column
 app.get("/artworks/types", async (req, res) => {
   const categories = await getArtworkCategories();
@@ -32,11 +38,8 @@ app.get("/artworks/types", async (req, res) => {
 });
 
 app.get("/artworks", async (req, res) => {
-  //const artworks = await getArtworks();
-  //res.send(artworks);
-
-  const { type, status, range } = req.query;
-  const artworks = await getArtworksByType(type, status, range);
+  const { type, status, range, artist_id } = req.query;
+  const artworks = await getArtworksByType(type, status, range, artist_id);
   res.send(artworks);
 });
 
@@ -76,7 +79,6 @@ app.get("/exhibitions", async (req, res) => {
 app.get("/galleries", async (req, res) => {
   const selectedLocation = req.query.loc;
   const galleries = await getGalleries(selectedLocation);
-  console.log(galleries);
   res.send(galleries);
 });
 
@@ -112,7 +114,6 @@ app.get("/curator", async (req, res) => {
 
 app.post("/curator/exhibitions", async (req, res) => {
   try {
-    console.log(req.body);
     req.body.START_DATE = new Date(req.body.START_DATE)
       .toISOString()
       .split("T")[0];

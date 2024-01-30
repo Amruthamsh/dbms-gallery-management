@@ -3,6 +3,7 @@ import LocationDropdown from "../components/LocationDropdown";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../styles/galleries.css";
 
 const Galleries = () => {
   const [selectedLocation, setSelectedLocation] = useState("%");
@@ -27,13 +28,13 @@ const Galleries = () => {
   }, [selectedLocation]);
 
   return (
-    <div className="gallery">
+    <div className="galleries">
       <h1>Find Galleries!</h1>
       <LocationDropdown onLocationChange={handleLocationChange} />
       <div>
         {galleries.map((gallery) => (
           <div key={gallery.GAL_ID}>
-            <Link to={`/gallery/${gallery.GAL_ID}`}>
+            <Link to={`/gallery/${gallery.GAL_ID}`} className="gallery-items">
               <h3>{gallery.GALLERY_NAME}</h3>
             </Link>
             <p>{gallery.LOCATION}</p>

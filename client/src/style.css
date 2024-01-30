@@ -1,10 +1,18 @@
 .App {
+  background-color: #ffffff;
 }
 
 header {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.gallery {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 .artworks {
@@ -15,12 +23,12 @@ header {
 
 .art {
   background-color: rgb(255, 255, 255);
-  margin: 20px;
+  margin: 5px;
   padding: 10px;
 }
 
 .art:hover {
-  border-radius: 25px;
+  border-radius: 10px;
   box-shadow: 4px 4px 10px rgb(194, 201, 208);
   cursor: pointer;
 }
@@ -32,6 +40,7 @@ header {
 
 .flex-container {
   display: flex;
+  gap: 40px;
 }
 
 .flex-container aside {

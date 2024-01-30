@@ -42,7 +42,7 @@ const Exhibitions = () => {
 
   return (
     <div className="gallery">
-      <h1>Find Exhibitions!</h1>
+      <h1>Search Exhibitions!</h1>
       <div className="flex-container">
         <aside>
           <LocationDropdown onLocationChange={handleLocationChange} />

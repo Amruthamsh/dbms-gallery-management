@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../styles/galleries.css";
 
 const Gallery = () => {
   const { id } = useParams();
@@ -50,9 +51,9 @@ const Gallery = () => {
     fetchGalleryData();
   }, []);
   return (
-    <div className="gallery">
+    <div className="gallery-page">
       {gallery && (
-        <div className="exhibition">
+        <div>
           <h2>{gallery?.GALLERY_NAME}</h2>
 
           <Link className="myButton" to={`/curator/${gallery.CURATOR_ID}`}>
@@ -70,7 +71,9 @@ const Gallery = () => {
         </div>
       )}
       <div className="exhibition">
-        {currentExhibitions[0] && <h3>Current Exhibitions</h3>}
+        {currentExhibitions[0] && (
+          <h3>-------- Current Exhibitions --------</h3>
+        )}
         {currentExhibitions.map((exhibition) => (
           <div key={exhibition.E_ID}>
             <h4>{exhibition.EXH_NAME}</h4>
@@ -83,7 +86,9 @@ const Gallery = () => {
       </div>
 
       <div className="exhibition">
-        {upcomingExhibitions[0] && <h3>Upcoming Exhibitions</h3>}
+        {upcomingExhibitions[0] && (
+          <h3>-------- Upcoming Exhibitions --------</h3>
+        )}
         {upcomingExhibitions.map((exhibition) => (
           <div key={exhibition.E_ID}>
             <h4>{exhibition.EXH_NAME}</h4>
@@ -96,7 +101,7 @@ const Gallery = () => {
       </div>
 
       <div className="exhibition">
-        {pastExhibitions[0] && <h3>Past Exhibitions</h3>}
+        {pastExhibitions[0] && <h3>-------- Past Exhibitions --------</h3>}
         {pastExhibitions.map((exhibition) => (
           <div key={exhibition.E_ID}>
             <h4>{exhibition.EXH_NAME}</h4>

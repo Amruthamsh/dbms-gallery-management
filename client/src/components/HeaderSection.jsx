@@ -1,10 +1,14 @@
 import React from "react";
+import "../styles/header.css";
 
 const HeaderSection = () => {
   return (
     <header>
-      <h1>Emprise Galleries</h1>
-      <h2>Organize, Explore, Cherish – Gallery Management Redefined.</h2>
+      <div className="emprise">
+        <div className="title">Emprise Galleries </div>
+        <div className="tagline">Organize, Explore, Cherish</div>{" "}
+        <p className="info">Gallery Management Redefined.</p>
+      </div>
     </header>
   );
 };

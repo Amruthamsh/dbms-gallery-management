@@ -1,0 +1,20 @@
+.emprise {
+  padding-top: 20px;
+  font-size: large;
+}
+
+.emprise .title {
+  font-size: 3em;
+  font-weight: 500;
+  color: #4f200d;
+}
+
+.emprise .tagline {
+  font-weight: 500;
+  color: #4f200d;
+}
+
+.emprise .info {
+  font-weight: 600;
+  color: #ff0088;
+}
