@@ -39,7 +39,7 @@ const Galleries = () => {
               <h3>{gallery.GALLERY_NAME}</h3>
             </Link>
             <p>{gallery.LOCATION}</p>
-            <p>{gallery.Description}</p>
+            <p className="gallery-desc">{gallery.Description}</p>
           </div>
         ))}
       </div>

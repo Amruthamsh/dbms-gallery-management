@@ -22,7 +22,7 @@ const Gallery = () => {
 
         // Fetch current exhibitions
         const currentResponse = await axios.get(
-          `http://localhost:5050/gallery/exhibitions/current?id=${id}&date=${
+          `http://localhost:5050/gallery/exhibition/current/artworks?id=${id}&date=${
             selectedDate.toISOString().split("T")[0]
           }`
         );
@@ -30,7 +30,7 @@ const Gallery = () => {
 
         // Fetch past exhibitions
         const pastResponse = await axios.get(
-          `http://localhost:5050/gallery/exhibitions/past?id=${id}&date=${
+          `http://localhost:5050/gallery/exhibition/past/artworks?id=${id}&date=${
             selectedDate.toISOString().split("T")[0]
           }`
         );
@@ -50,6 +50,9 @@ const Gallery = () => {
 
     fetchGalleryData();
   }, []);
+
+  console.log(pastExhibitions);
+
   return (
     <div className="gallery-page">
       {gallery && (
@@ -68,48 +71,112 @@ const Gallery = () => {
           </p>
         </div>
       )}
-      <div className="exhibition">
-        {currentExhibitions[0] && (
-          <h3>-------- Current Exhibitions --------</h3>
-        )}
-        {currentExhibitions.map((exhibition) => (
-          <div key={exhibition.E_ID}>
-            <h4>{exhibition.EXH_NAME}</h4>
-            <p>
-              {exhibition.FORMATTED_START_DATE} -{" "}
-              {exhibition.FORMATTED_END_DATE}
-            </p>
-          </div>
-        ))}
-      </div>
+      {upcomingExhibitions[0] && (
+        <div className="exhibition">
+          <h2>Upcoming Exhibitions</h2>
+          {upcomingExhibitions.map((exhibition) => (
+            <div key={exhibition.E_ID}>
+              <h4>{exhibition.EXH_NAME}</h4>
+              <p>
+                {exhibition.FORMATTED_START_DATE} -{" "}
+                {exhibition.FORMATTED_END_DATE}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
-      <div className="exhibition">
-        {upcomingExhibitions[0] && (
-          <h3>-------- Upcoming Exhibitions --------</h3>
-        )}
-        {upcomingExhibitions.map((exhibition) => (
-          <div key={exhibition.E_ID}>
-            <h4>{exhibition.EXH_NAME}</h4>
-            <p>
-              {exhibition.FORMATTED_START_DATE} -{" "}
-              {exhibition.FORMATTED_END_DATE}
-            </p>
-          </div>
-        ))}
-      </div>
+      {currentExhibitions[0] && (
+        <div className="exhibition">
+          <h2> Ongoing Exhibitions </h2>
+          {currentExhibitions.map((exhibition) => (
+            <div key={exhibition.E_ID}>
+              <h3>{exhibition.EXH_NAME}</h3>
+              <div className="artworks">
+                {exhibition.artworks.map((artwork) => (
+                  <div key={artwork.ART_ID} className="art">
+                    <h4>{artwork.TITLE}</h4>
+                    <img
+                      src={`/images/artworks/${artwork.IMG_LINK}`}
+                      alt=""
+                      style={{ width: "auto", height: "200px" }}
+                    />
+                    <h4>
+                      {artwork.FirstName} {artwork.LastName}
+                      {", "}
+                      {artwork.TYPE}
+                    </h4>
+                    <p>
+                      {artwork.STATUS === "1"
+                        ? "SOLD"
+                        : artwork.STATUS === "0" && (
+                            <p>
+                              Price: ₹{artwork.PRICE}{" "}
+                              <button>
+                                <Link to={`/buyart/${artwork.ART_ID}`}>
+                                  Buy
+                                </Link>
+                              </button>
+                            </p>
+                          )}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p>
+                {exhibition.FORMATTED_START_DATE} -{" "}
+                {exhibition.FORMATTED_END_DATE}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
-      <div className="exhibition">
-        {pastExhibitions[0] && <h3>-------- Past Exhibitions --------</h3>}
-        {pastExhibitions.map((exhibition) => (
-          <div key={exhibition.E_ID}>
-            <h4>{exhibition.EXH_NAME}</h4>
-            <p>
-              {exhibition.FORMATTED_START_DATE} -{" "}
-              {exhibition.FORMATTED_END_DATE}
-            </p>
-          </div>
-        ))}
-      </div>
+      {pastExhibitions[0] && (
+        <div className="exhibition">
+          <h2>Past Exhibitions</h2>
+          {pastExhibitions.map((exhibition) => (
+            <div key={exhibition.E_ID}>
+              <h3>{exhibition.EXH_NAME}</h3>
+              <div className="artworks">
+                {exhibition.artworks.map((artwork) => (
+                  <div key={artwork.ART_ID} className="art">
+                    <h4>{artwork.TITLE}</h4>
+                    <img
+                      src={`/images/artworks/${artwork.IMG_LINK}`}
+                      alt=""
+                      style={{ width: "auto", height: "200px" }}
+                    />
+                    <h4>
+                      {artwork.FirstName} {artwork.LastName}
+                      {", "}
+                      {artwork.TYPE}
+                    </h4>
+                    <p>
+                      {artwork.STATUS === "1"
+                        ? "SOLD"
+                        : artwork.STATUS === "0" && (
+                            <p>
+                              Price: ₹{artwork.PRICE}{" "}
+                              <button>
+                                <Link to={`/buyart/${artwork.ART_ID}`}>
+                                  Buy
+                                </Link>
+                              </button>
+                            </p>
+                          )}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p>
+                {exhibition.FORMATTED_START_DATE} -{" "}
+                {exhibition.FORMATTED_END_DATE}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -18,6 +18,7 @@ import {
   getAdminData,
   getArtDetails,
   createCustomer,
+  ExhibitionArtworks,
 } from "./database.js";
 
 dotevn.config();
@@ -96,6 +97,44 @@ app.get("/gallery/exhibitions/past", async (req, res) => {
   const { id, date } = req.query;
   const data = await getGalleryPastExhibitions(id, date);
   res.json(data);
+});
+
+app.get("/gallery/exhibition/current/artworks", async (req, res) => {
+  const { id, date } = req.query;
+
+  // Get past exhibitions
+  const exhibitions = await getGalleryCurrentExhibitions(id, date);
+
+  // For each exhibition, get corresponding artworks
+  const exhibitionArtworksPromises = exhibitions.map(async (exhibition) => {
+    const artworks = await ExhibitionArtworks(exhibition.E_ID);
+    return { ...exhibition, artworks };
+  });
+
+  // Wait for all exhibitionArtworksPromises to resolve
+  const exhibitionsWithArtworks = await Promise.all(exhibitionArtworksPromises);
+
+  // Send the JSON response
+  res.json(exhibitionsWithArtworks);
+});
+
+app.get("/gallery/exhibition/past/artworks", async (req, res) => {
+  const { id, date } = req.query;
+
+  // Get past exhibitions
+  const exhibitions = await getGalleryPastExhibitions(id, date);
+
+  // For each exhibition, get corresponding artworks
+  const exhibitionArtworksPromises = exhibitions.map(async (exhibition) => {
+    const artworks = await ExhibitionArtworks(exhibition.E_ID);
+    return { ...exhibition, artworks };
+  });
+
+  // Wait for all exhibitionArtworksPromises to resolve
+  const exhibitionsWithArtworks = await Promise.all(exhibitionArtworksPromises);
+
+  // Send the JSON response
+  res.json(exhibitionsWithArtworks);
 });
 
 app.get("/gallery/exhibitions/upcoming", async (req, res) => {

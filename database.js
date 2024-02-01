@@ -135,6 +135,17 @@ export async function getGalleryPastExhibitions(id, selectedDate) {
   return rows;
 }
 
+export async function ExhibitionArtworks(id) {
+  const [rows] = await pool.query(
+    `SELECT artists.*, artwork.*
+    FROM artists
+    JOIN artwork ON artwork.artist_id = artists.artist_id
+    WHERE artwork.EXH_ID = ?`,
+    [id]
+  );
+  return rows;
+}
+
 //get upcoming exhibitions
 export async function getGalleryUpcomingExhibitions(id, selectedDate) {
   const [rows] = await pool.query(

@@ -59,7 +59,11 @@ const Buy = () => {
         <div>
           <div>
             <h2>{art.TITLE}</h2>
-            <img src={`/images/artworks/${art.IMG_LINK}`} alt="asfasf" />
+            <img
+              src={`/images/artworks/${art.IMG_LINK}`}
+              alt="painting"
+              style={{ maxWidth: "600px" }}
+            />
             <h3>
               Artist: {art.FirstName} {art.LastName}
               <br />
