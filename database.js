@@ -65,13 +65,6 @@ export async function createArtwork(artwork_details) {
   return getArtwork(result.insertId);
 }
 
-//const art = await getArtwork(2);
-//console.log(art);
-
-const artwork_details = ["1267", 1, 7000, "oil", "img9.png", "Rosebud"];
-//const result = await createArtwork(artwork_details);
-//console.log(result);
-
 export async function getExhibitions(selectedLocation, selectedDate) {
   const [rows] = await pool.query(
     `SELECT E_ID, EXH_NAME, GALLERY_NAME, GALLERY_ID, DATE_FORMAT(START_DATE, "%M %e, %Y") AS FORMATTED_START_DATE,DATE_FORMAT(END_DATE, "%M %e, %Y") AS FORMATTED_END_DATE, LOCATION 
@@ -98,7 +91,7 @@ export async function getExhibitionLocations() {
 //get all the galleries
 export async function getGalleries(loc) {
   const [rows] = await pool.query(
-    `SELECT GAL_ID, GALLERY_NAME, LOCATION
+    `SELECT *
     from gallery
     WHERE gallery.LOCATION LIKE ?`,
     [loc]
@@ -154,7 +147,7 @@ export async function getGalleryUpcomingExhibitions(id, selectedDate) {
   return rows;
 }
 
-//get Admin Data -- all of it
+//get Admin Data
 export async function getAdminData(id) {
   const [rows] = await pool.query(
     `SELECT GAL_ID, GALLERY_NAME, curator.NAME 
@@ -182,4 +175,35 @@ export async function createExhibition(exhibitionData) {
       exhibitionData.DESC,
     ]
   );
+}
+
+export async function createCustomer(customerData) {
+  await pool.query(
+    `INSERT into customer (NAME, PHONE_NO, EMAIL, ART_ID, TRANSACTION_DATE) 
+    VALUES (?, ?, ?, ?, NOW())`,
+    [
+      customerData.NAME,
+      customerData.PHONE_NO,
+      customerData.EMAIL,
+      customerData.ART_ID,
+    ]
+  );
+  await pool.query(
+    `UPDATE artwork 
+    SET STATUS = 1
+    where artwork.ART_ID = ?`,
+    [customerData.ART_ID]
+  );
+}
+
+export async function getArtDetails(id) {
+  const [rows] = await pool.query(
+    `SELECT artists.*, artwork.*
+    FROM artists
+    JOIN artwork ON artwork.artist_id = artists.artist_id
+    WHERE artwork.art_id = ?
+  `,
+    [id]
+  );
+  return rows[0];
 }

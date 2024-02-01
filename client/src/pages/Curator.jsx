@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CalendarSelect from "../components/CalendarSelect";
 import axios from "axios";
 
 const Curator = () => {
+  const navigate = useNavigate();
   const { id } = useParams(); //admin id
   const [admin, setAdmin] = useState();
 
@@ -16,7 +17,7 @@ const Curator = () => {
     GALLERY_ID: 0,
   });
 
-  //get admin Data - all of it.
+  //get admin Data
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
@@ -61,6 +62,7 @@ const Curator = () => {
         newExhibition
       );
       alert("Exhibition added!");
+      navigate("/galleries");
     } catch (err) {
       console.log(err);
     }

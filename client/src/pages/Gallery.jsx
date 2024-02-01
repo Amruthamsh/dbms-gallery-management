@@ -56,17 +56,15 @@ const Gallery = () => {
         <div>
           <h2>{gallery?.GALLERY_NAME}</h2>
 
-          <Link className="myButton" to={`/curator/${gallery.CURATOR_ID}`}>
-            Go to Admin Page
-          </Link>
-          <Link className="myButton">Participate!</Link>
-
           <p>{gallery.LOCATION}</p>
           <h3>Curator: {gallery.NAME}</h3>
           <p>
             ID: {gallery.CURATOR_ID} <br />
             PHONE: {gallery.PHONE} <br />
             EMAIL: {gallery.EMAIL} <br />
+            <Link className="myButton" to={`/curator/${gallery.CURATOR_ID}`}>
+              Go to Admin Page
+            </Link>
           </p>
         </div>
       )}

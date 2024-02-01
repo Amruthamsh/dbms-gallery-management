@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import dotevn from "dotenv";
 
 import {
   getAllArtists,
@@ -15,7 +16,12 @@ import {
   getGalleryUpcomingExhibitions,
   createExhibition,
   getAdminData,
+  getArtDetails,
+  createCustomer,
 } from "./database.js";
+
+dotevn.config();
+const PORT = process.env.PORT || 5050;
 
 const app = express();
 app.use(express.json());
@@ -48,14 +54,6 @@ app.get("/artworks/:id", async (req, res) => {
   const artwork = await getArtwork(id);
   res.send(artwork);
 });
-
-/*
-app.post("/artworks", async (req, res) => {
-  const artwork_details = req.body;
-  const art = await createArtwork(artwork_details);
-  res.status(201).send(art);
-});
-*/
 
 app.get("/exhibitions/locations", async (req, res) => {
   const _locations = await getExhibitionLocations();
@@ -126,11 +124,23 @@ app.post("/curator/exhibitions", async (req, res) => {
   }
 });
 
+app.get("/artdetails", async (req, res) => {
+  const id = req.query.id;
+  const data = await getArtDetails(id);
+  res.json(data);
+});
+
+app.post("/buyart", async (req, res) => {
+  const customer_details = req.body;
+  const customer = await createCustomer(customer_details);
+  res.status(201).send(customer);
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
-app.listen(5050, () => {
-  console.log("server is running on port 5050");
+app.listen(PORT, () => {
+  console.log(`Server Started at PORT:${PORT}`);
 });

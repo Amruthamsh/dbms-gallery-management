@@ -15,6 +15,29 @@ header {
   margin: 0 auto;
 }
 
+.galleries {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.galleries .gallery-item {
+  width: calc(50% - 20px); /* Account for potential margin/padding */
+  margin: 10px; /* Adjust spacing as needed */
+  margin-top: 30px;
+  box-sizing: border-box; /* Ensure consistent width calculations */
+}
+
+.galleries .gallery-item h3 {
+  font-size: x-large;
+  color: #ff0088;
+}
+
+.galleries img {
+  width: 80%;
+  height: auto; /* Maintain aspect ratio while filling container */
+}
+
 .artworks {
   display: flex;
   flex-wrap: wrap;

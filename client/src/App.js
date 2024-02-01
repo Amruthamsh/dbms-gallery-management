@@ -21,7 +21,7 @@ function App() {
           <Route path="/curator/:id" element={<Curator />} />
 
           <Route path="/galleries" element={<Galleries />} />
-          <Route path="/buyart" element={<Buy />} />
+          <Route path="/buyart/:id" element={<Buy />} />
           <Route path="/artworks" element={<Artworks />} />
         </Routes>
       </BrowserRouter>

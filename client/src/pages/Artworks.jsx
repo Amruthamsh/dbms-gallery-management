@@ -124,7 +124,7 @@ const Artworks = () => {
                     <p>
                       Price: ₹{art.PRICE}{" "}
                       <button>
-                        <Link to="/buyart">Buy</Link>
+                        <Link to={`/buyart/${art.ART_ID}`}>Buy</Link>
                       </button>
                     </p>
                   )}

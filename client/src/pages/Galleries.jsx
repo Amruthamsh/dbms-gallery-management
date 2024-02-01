@@ -28,16 +28,18 @@ const Galleries = () => {
   }, [selectedLocation]);
 
   return (
-    <div className="galleries">
+    <div className="gallery">
       <h1>Find Galleries!</h1>
       <LocationDropdown onLocationChange={handleLocationChange} />
-      <div>
+      <div className="galleries">
         {galleries.map((gallery) => (
-          <div key={gallery.GAL_ID}>
-            <Link to={`/gallery/${gallery.GAL_ID}`} className="gallery-items">
+          <div key={gallery.GAL_ID} className="gallery-item">
+            <img src={`images/gallery/${gallery.IMG_LINK}`} alt="" />
+            <Link to={`/gallery/${gallery.GAL_ID}`} className="gallery-title">
               <h3>{gallery.GALLERY_NAME}</h3>
             </Link>
             <p>{gallery.LOCATION}</p>
+            <p>{gallery.Description}</p>
           </div>
         ))}
       </div>
