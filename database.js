@@ -40,10 +40,10 @@ export async function getArtworksByType(
 
   const [rows] = await pool.query(
     `
-    SELECT artists.*, artwork.*
-FROM artists
-JOIN artwork ON artwork.artist_id = artists.artist_id
-WHERE artists.artist_id LIKE ?
+  SELECT artists.*, artwork.*
+  FROM artists
+  JOIN artwork ON artwork.artist_id = artists.artist_id
+  WHERE artists.artist_id LIKE ?
   AND artwork.TYPE LIKE ?
   AND artwork.STATUS LIKE ?
   AND artwork.PRICE BETWEEN ? AND ?;
@@ -110,6 +110,18 @@ export async function getGallery(id) {
   return rows[0];
 }
 
+//get upcoming exhibitions
+export async function getGalleryUpcomingExhibitions(id, selectedDate) {
+  const [rows] = await pool.query(
+    `SELECT E_ID, EXH_NAME, DATE_FORMAT(START_DATE, "%M %e, %Y") AS FORMATTED_START_DATE, DATE_FORMAT(END_DATE, "%M %e, %Y") AS FORMATTED_END_DATE 
+    from exhibitions 
+    WHERE exhibitions.GALLERY_ID = ? AND DATE(START_DATE) > ?
+    ORDER BY START_DATE ASC`,
+    [id, selectedDate]
+  );
+  return rows;
+}
+
 //get current exhibitions
 export async function getGalleryCurrentExhibitions(id, selectedDate) {
   const [rows] = await pool.query(
@@ -146,18 +158,6 @@ export async function ExhibitionArtworks(id) {
   return rows;
 }
 
-//get upcoming exhibitions
-export async function getGalleryUpcomingExhibitions(id, selectedDate) {
-  const [rows] = await pool.query(
-    `SELECT E_ID, EXH_NAME, DATE_FORMAT(START_DATE, "%M %e, %Y") AS FORMATTED_START_DATE, DATE_FORMAT(END_DATE, "%M %e, %Y") AS FORMATTED_END_DATE 
-    from exhibitions 
-    WHERE exhibitions.GALLERY_ID = ? AND DATE(START_DATE) > ?
-    ORDER BY START_DATE ASC`,
-    [id, selectedDate]
-  );
-  return rows;
-}
-
 //get Admin Data
 export async function getAdminData(id) {
   const [rows] = await pool.query(
@@ -188,6 +188,18 @@ export async function createExhibition(exhibitionData) {
   );
 }
 
+export async function getArtDetails(id) {
+  const [rows] = await pool.query(
+    `SELECT artists.*, artwork.*
+    FROM artists
+    JOIN artwork ON artwork.artist_id = artists.artist_id
+    WHERE artwork.art_id = ?
+  `,
+    [id]
+  );
+  return rows[0];
+}
+
 export async function createCustomer(customerData) {
   await pool.query(
     `INSERT into customer (NAME, PHONE_NO, EMAIL, ART_ID, TRANSACTION_DATE) 
@@ -205,16 +217,4 @@ export async function createCustomer(customerData) {
     where artwork.ART_ID = ?`,
     [customerData.ART_ID]
   );
-}
-
-export async function getArtDetails(id) {
-  const [rows] = await pool.query(
-    `SELECT artists.*, artwork.*
-    FROM artists
-    JOIN artwork ON artwork.artist_id = artists.artist_id
-    WHERE artwork.art_id = ?
-  `,
-    [id]
-  );
-  return rows[0];
 }
