@@ -22,7 +22,7 @@ const Gallery = () => {
 
         // Fetch current exhibitions
         const currentResponse = await axios.get(
-          `http://localhost:5050/gallery/exhibition/current/artworks?id=${id}&date=${
+          `http://localhost:5050/gallery/exhibitions/current/artworks?id=${id}&date=${
             selectedDate.toISOString().split("T")[0]
           }`
         );
@@ -30,7 +30,7 @@ const Gallery = () => {
 
         // Fetch past exhibitions
         const pastResponse = await axios.get(
-          `http://localhost:5050/gallery/exhibition/past/artworks?id=${id}&date=${
+          `http://localhost:5050/gallery/exhibitions/past/artworks?id=${id}&date=${
             selectedDate.toISOString().split("T")[0]
           }`
         );

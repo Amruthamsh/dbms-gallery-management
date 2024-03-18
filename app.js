@@ -99,7 +99,7 @@ app.get("/gallery/exhibitions/past", async (req, res) => {
   res.json(data);
 });
 
-app.get("/gallery/exhibition/current/artworks", async (req, res) => {
+app.get("/gallery/exhibitions/current/artworks", async (req, res) => {
   const { id, date } = req.query;
 
   // Get past exhibitions
@@ -118,7 +118,7 @@ app.get("/gallery/exhibition/current/artworks", async (req, res) => {
   res.json(exhibitionsWithArtworks);
 });
 
-app.get("/gallery/exhibition/past/artworks", async (req, res) => {
+app.get("/gallery/exhibitions/past/artworks", async (req, res) => {
   const { id, date } = req.query;
 
   // Get past exhibitions
