@@ -2,11 +2,11 @@
 
 Combining Exhibitions, artists, galleries in a single web platform built using React and MySQL. 
 
-![1](https://github.com/user-attachments/assets/6f476a51-1e1c-4a26-b60b-b824897856f6 | width=200)
+![1](https://github.com/user-attachments/assets/6f476a51-1e1c-4a26-b60b-b824897856f6)
 
-![2](https://github.com/user-attachments/assets/fc114380-d337-4fe8-8be8-b0c84d55af4c | width=200)
+![2](https://github.com/user-attachments/assets/fc114380-d337-4fe8-8be8-b0c84d55af4c)
 
-![3](https://github.com/user-attachments/assets/5ca1f9d0-62ab-42e5-8e7a-c5b29a1cd885 | width=200)
+![3](https://github.com/user-attachments/assets/5ca1f9d0-62ab-42e5-8e7a-c5b29a1cd885)
 
 ## Run the app
 
