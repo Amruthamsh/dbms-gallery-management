@@ -1,3 +1,9 @@
+# Gallery Management App
+
+Combining Exhibitions, artists, galleries in a single web platform built using React and MySQL. 
+
+## Run the app
+
 Use the gallery_management.sql file and use it as you MySQL database
 
 Create .env file in this format and replace it with your values
