@@ -2,6 +2,8 @@
 
 Combining Exhibitions, artists, galleries in a single web platform built using React and MySQL. 
 
+Screenshots from the web application:
+
 ![1](https://github.com/user-attachments/assets/6f476a51-1e1c-4a26-b60b-b824897856f6)
 
 ![2](https://github.com/user-attachments/assets/fc114380-d337-4fe8-8be8-b0c84d55af4c)
